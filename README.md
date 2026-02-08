@@ -3,10 +3,12 @@
     <b><a href="https://github.com/katzer/cordova-plugin-background-mode/tree/example">SAMPLE APP</a> :point_right:</b>
 </p>
 
-Cordova Background Plugin [![npm version](https://badge.fury.io/js/cordova-plugin-background-mode.svg)](http://badge.fury.io/js/cordova-plugin-background-mode) [![Build Status](https://travis-ci.org/katzer/cordova-plugin-background-mode.svg?branch=master)](https://travis-ci.org/katzer/cordova-plugin-background-mode) [![codebeat badge](https://codebeat.co/badges/49709283-b313-4ced-8630-f520baaec7b5)](https://codebeat.co/projects/github-com-katzer-cordova-plugin-background-mode)
+Cordova Background Plugin
 =========================
 
 Plugin for the [Cordova][cordova] framework to perform infinite background execution.
+
+**This was based on [Katzer's abandoned plugin](https://github.com/katzer/cordova-plugin-background-mode), which worked best for our Android scenario. However, it depends on a known iOS-hack that plays a silent sound in the background, causing Apple to refuse production builds if they don't actually use background sound. Since iOS is more reliable on that front, I simply stripped out all iOS components, keeping Android intact as that works great.**
 
 Most mobile operating systems are multitasking capable, but most apps dont need to run while in background and not present for the user. Therefore they pause the app in background mode and resume the app before switching to foreground mode.
 The system keeps all network connections open while in background, but does not deliver the data until the app resumes.
@@ -18,10 +20,7 @@ Use the plugin by your own risk!
 
 
 ## Supported Platforms
-- __Android/Amazon FireOS__
-- __Browser__
-- __iOS__
-- __Windows__ _(see #222)_
+- __Android__
 
 
 ## Installation
@@ -29,19 +28,15 @@ The plugin can be installed via [Cordova-CLI][CLI] and is publicly available on 
 
 Execute from the projects root folder:
 
-    $ cordova plugin add cordova-plugin-background-mode
-
-Or install a specific version:
-
-    $ cordova plugin add de.appplant.cordova.plugin.background-mode@VERSION
+    $ cordova plugin add cordova-plugin-background-mode-android
 
 Or install the latest head version:
 
-    $ cordova plugin add https://github.com/katzer/cordova-plugin-background-mode.git
+    $ cordova plugin add https://github.com/igorsantos07/cordova-plugin-background-mode-android.git
 
 Or install from local source:
 
-    $ cordova plugin add cordova-plugin-background-mode --searchpath <path>
+    $ cordova plugin add cordova-plugin-background-mode-android --searchpath <path>
 
 
 ## Usage
@@ -145,8 +140,8 @@ The title, text and icon for that notification can be customized as below. Also,
 cordova.plugins.backgroundMode.setDefaults({
     title: String,
     text: String,
-    icon: 'icon' // this will look for icon.png in platforms/android/res/drawable|mipmap
-    color: String // hex format like 'F14F4D'
+    icon: 'icon', // this will look for icon.png in platforms/android/res/drawable|mipmap
+    color: String, // hex format like 'F14F4D'
     resume: Boolean,
     hidden: Boolean,
     bigText: Boolean
