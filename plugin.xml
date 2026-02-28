@@ -3,13 +3,13 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-background-mode-android"
-        version="0.7.4">
+        version="0.7.12">
 
     <name>BackgroundMode</name>
 
     <description>Prevent apps from going to sleep in background on Android.</description>
 
-    <repo>https://github.com/igorsantos07/cordova-plugin-background-mode.git</repo>
+    <repo>https://github.com/igorsantos07/cordova-plugin-background-mode-android.git</repo>
 
     <keywords>appplant, background</keywords>
 
@@ -32,6 +32,29 @@
         <clobbers target="plugin.backgroundMode" />
     </js-module>
 
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="BackgroundMode">
+                <param name="ios-package" value="APPBackgroundMode" onload="true" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>audio</string>
+            </array>
+        </config-file>
+
+        <resource-file src="appbeep.wav" />
+
+        <header-file src="src/ios/APPBackgroundMode.h" />
+        <source-file src="src/ios/APPBackgroundMode.m" />
+        <header-file src="src/ios/APPMethodMagic.h" />
+        <source-file src="src/ios/APPMethodMagic.m" />
+    </platform>
+
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
@@ -48,11 +71,23 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
+            <service
+              android:name="de.appplant.cordova.plugin.background.ForegroundService"
+              android:foregroundServiceType="dataSync"
+              android:exported="false">
+            </service>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
         </config-file>
 
         <source-file

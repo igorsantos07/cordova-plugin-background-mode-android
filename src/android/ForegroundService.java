@@ -29,6 +29,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Build;
@@ -129,7 +130,11 @@ public class ForegroundService extends Service {
         boolean isSilent    = settings.optBoolean("silent", false);
 
         if (!isSilent) {
-            startForeground(NOTIFICATION_ID, makeNotification());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(NOTIFICATION_ID, makeNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            } else {
+                startForeground(NOTIFICATION_ID, makeNotification());
+            }
         }
 
         PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
@@ -152,6 +157,8 @@ public class ForegroundService extends Service {
             wakeLock.release();
             wakeLock = null;
         }
+
+        stopSelf();
     }
 
     /**
@@ -219,7 +226,7 @@ public class ForegroundService extends Service {
         setColor(notification, settings);
 
         if (intent != null && settings.optBoolean("resume")) {
-            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+             int flags = PendingIntent.FLAG_UPDATE_CURRENT;
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 flags = flags | PendingIntent.FLAG_MUTABLE;

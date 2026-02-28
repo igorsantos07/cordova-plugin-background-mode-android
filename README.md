@@ -1,6 +1,6 @@
 
 <p align="left">
-    <b><a href="https://github.com/katzer/cordova-plugin-background-mode/tree/example">SAMPLE APP</a> :point_right:</b>
+    <b><a href="https://github.com/katzer/cordova-plugin-background-mode/tree/example">SAMPLE APP (katzer)</a> :point_right:</b>
 </p>
 
 Cordova Background Plugin
@@ -9,6 +9,8 @@ Cordova Background Plugin
 Plugin for the [Cordova][cordova] framework to perform infinite background execution.
 
 **This was based on [Katzer's abandoned plugin](https://github.com/katzer/cordova-plugin-background-mode), which worked best for our Android scenario. However, it depends on a known iOS-hack that plays a silent sound in the background, causing Apple to refuse production builds if they don't actually use background sound. Since iOS is more reliable on that front, I simply stripped out all iOS components, keeping Android intact as that works great.**
+
+**Then, I also merged [Bruno Chikuji's changes](https://github.com/brunochikuji/cordova-plugin-background-mode) to support android 12 and 14.**
 
 Most mobile operating systems are multitasking capable, but most apps dont need to run while in background and not present for the user. Therefore they pause the app in background mode and resume the app before switching to foreground mode.
 The system keeps all network connections open while in background, but does not deliver the data until the app resumes.
